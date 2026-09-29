@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>포세일</title>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Black+Han+Sans&display=swap" rel="stylesheet">
+<style>
+:root{--wood1:#7a4a26;--wood2:#8d5a30;--felt:#2f6b4a;--felt2:#245a3d;--ink:#2b2118;--gold:#f0b429;--gold2:#b7800f;--paper:#fdf6e3;--line:#5a3a1e}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Jua','Malgun Gothic',sans-serif;color:var(--ink);min-height:100vh;
+background:repeating-linear-gradient(92deg,var(--wood1) 0 14px,var(--wood2) 14px 22px,#84532b 22px 40px,var(--wood1) 40px 52px)}
+#app{max-width:840px;margin:0 auto;padding:12px}
+h1{font-family:'Black Han Sans','Jua',sans-serif;font-weight:400;font-size:42px;text-align:center;margin:16px 0 0;color:var(--gold);letter-spacing:6px;
+text-shadow:0 2px 0 var(--line),0 4px 8px #0004}
+.sub{text-align:center;color:#f6e6c8;margin:2px 0 12px;letter-spacing:6px;font-size:14px}
+.box,.me,.pls,.end{background:var(--paper);border:3px solid var(--line);border-radius:14px;padding:12px;margin:12px 0;box-shadow:0 5px 0 #3a2410,0 10px 18px #0005;
+background-image:radial-gradient(#e9dcc0 1px,transparent 1px);background-size:6px 6px}
+.mk{margin:12px 0;padding:18px 12px;border-radius:18px;border:6px solid #5a3a1e;box-shadow:inset 0 0 30px #0007,0 6px 0 #3a2410;
+background:radial-gradient(circle at 50% 40%,var(--felt),var(--felt2));display:flex;gap:16px;align-items:center;justify-content:center;flex-wrap:wrap}
+.mk small{color:#f6e6c8}
+input,select{font:inherit;padding:8px;border:2px solid #c9b48a;border-radius:8px;margin:4px;width:150px;background:#fff}
+button{font:inherit;padding:8px 16px;border:2px solid var(--line);border-radius:10px;background:var(--gold);color:var(--ink);cursor:pointer;margin:4px;box-shadow:0 4px 0 var(--line)}
+button:active{transform:translateY(3px);box-shadow:0 1px 0 var(--line)}
+button:disabled{opacity:.5}
+button.g{background:#e8dcc2}
+.top{display:flex;gap:10px;align-items:center;justify-content:space-between;color:#fff;flex-wrap:wrap;background:#3a2410cc;border-radius:12px;padding:6px 12px}
+.top b{color:var(--gold);font-size:22px}
+.cards{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;justify-content:center}
+.cw{text-align:center}.cw small{display:block;font-size:13px;max-width:84px;margin-top:4px;min-height:18px}
+/* 부동산 카드 (오리지널 증서 스타일) */
+.pc{--c:#4f8a3a;width:66px;height:92px;border-radius:9px;background:#fffdf5;border:2px solid #3a2410;position:relative;overflow:hidden;box-shadow:0 3px 0 #0004;padding:4px}
+.pc.t2{--c:#2f6db0}.pc.t3{--c:#b0413e}
+.pc .in{position:absolute;inset:4px;border:2px solid var(--c);border-radius:6px;background:linear-gradient(var(--c) 0 26px,#fffdf5 26px)}
+.pc .n{position:absolute;left:0;right:0;top:1px;text-align:center;font-size:21px;color:#fff;text-shadow:0 1px 0 #0005}
+.pc svg{position:absolute;left:50%;top:38px;width:34px;margin-left:-17px;fill:none;stroke:var(--c);stroke-width:3;stroke-linecap:round}
+.pc .l{position:absolute;left:6px;right:6px;bottom:6px;text-align:center;font-size:10px;border-top:1px solid var(--c);padding-top:1px;color:var(--c);letter-spacing:1px}
+.pc .d{position:absolute;left:0;right:0;bottom:19px;text-align:center;font-size:8px;color:var(--c);letter-spacing:2px}
+/* 수표 카드 */
+.cq{width:98px;height:56px;border-radius:7px;border:2px solid #3a2410;position:relative;box-shadow:0 3px 0 #0004;overflow:hidden;
+background:repeating-linear-gradient(45deg,#e7f2dc 0 3px,#d6eac4 3px 6px)}
+.cq .in{position:absolute;inset:3px;border:1.5px dashed #4b7a32;border-radius:5px;background:#f3f9ecee}
+.cq .t{position:absolute;left:6px;top:3px;font-size:10px;color:#4b7a32;letter-spacing:1px}
+.cq .v{position:absolute;right:7px;bottom:4px;font-size:16px;color:#2c5a1a}
+.cq .s{position:absolute;left:6px;bottom:5px;width:18px;height:18px;border-radius:50%;background:var(--gold);border:2px solid var(--gold2);font-size:11px;text-align:center;line-height:14px;color:#6b4a06}
+.cq.z{background:repeating-linear-gradient(45deg,#eee 0 3px,#ddd 3px 6px)}.cq.z .v,.cq.z .t{color:#888}
+/* 카드 더미 */
+.deck{width:58px;height:80px;border-radius:9px;border:2px solid #3a2410;position:relative;box-shadow:3px 3px 0 #fdf6e3,5px 5px 0 #3a2410,7px 7px 0 #fdf6e3,9px 9px 0 #3a2410;
+background:repeating-linear-gradient(45deg,#b7800f 0 5px,#f0b429 5px 10px);display:flex;align-items:center;justify-content:center;margin-right:10px}
+.deck span{background:#fdf6e3;border:2px solid #3a2410;border-radius:50%;width:32px;height:32px;line-height:28px;text-align:center;font-size:15px}
+.deck.c{background:repeating-linear-gradient(45deg,#4b7a32 0 5px,#7fb05c 5px 10px)}
+.pls{display:flex;gap:8px;flex-wrap:wrap}
+.pp{flex:1;min-width:110px;border:2px solid #c9b48a;border-radius:10px;padding:6px 10px;background:#fff}
+.pp small{display:block;font-size:12px;color:#6a5a3c}
+.pp.on{border-color:#d33;background:#fff0e8;box-shadow:0 0 0 3px #f0b42966}.pp.out{opacity:.5}
+.money{font-size:30px;color:#2c7a2c;display:flex;align-items:center;gap:8px}
+.money::before{content:'$';width:30px;height:30px;border-radius:50%;background:var(--gold);border:3px solid var(--gold2);font-size:17px;color:#6b4a06;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 0 var(--gold2)}
+.hand>div{display:inline-block;margin:4px;cursor:pointer;border-radius:10px;transition:transform .15s}
+.hand>div:hover{transform:translateY(-4px)}
+.hand>div.sel{outline:4px solid #d33;transform:translateY(-8px)}
+.msg{color:#fdf6e3;background:#3a2410e6;border-left:5px solid var(--gold);border-radius:8px;padding:6px 10px;margin:8px 0;font-size:14px}
+table{width:100%;border-collapse:collapse}td,th{padding:6px;border-bottom:1px solid #d9cba6;text-align:center}
+.win td{background:#ffe9a3}
+dialog{max-width:520px;max-height:85vh;overflow:auto;border-radius:14px;border:3px solid var(--line);background:var(--paper);font-family:inherit;line-height:1.5}
+.err{color:#b00}
+dialog h4{margin:14px 0 4px;color:#7a4a26}dialog p{margin:6px 0}
+.hd{text-align:center;padding-top:20px}
+.fan{display:flex;justify-content:center;gap:4px;margin:14px 0 22px}
+.fan>*{transform:rotate(var(--r)) translateY(calc(var(--y,0)*1px))}
+.hb{display:block;width:100%;max-width:488px;height:66px;margin:14px auto;border-radius:14px;font-size:22px;background:var(--paper);border:3px solid var(--line);box-shadow:0 5px 0 var(--line)}
+.hb:active{box-shadow:0 1px 0 var(--line);transform:translateY(4px)}
+.hb.a{background:var(--gold)}
+.credit{text-align:center;color:#f6e6c8aa;font-size:12px;margin:16px 0}
+</style></head><body>
+<div id="app"></div>
+<dialog id="rules">
+<h3>🏠 게임 방법 (3~6명)</h3>
+<p><b>목표</b> 집을 싸게 사서 비싸게 팔아요! 마지막에 돈이 가장 많은 사람이 이겨요.</p>
+<p><b>준비</b> 모두 같은 돈을 가지고 시작해요. (3~4명은 $18,000, 5~6명은 $14,000)<br>집 카드는 1번~30번, 숫자가 클수록 좋은 집이에요.</p>
+<h4>1단계: 집 사기 (경매)</h4>
+<p>① 사람 수만큼 집 카드가 펼쳐져요.<br>
+② 차례대로 <b>입찰</b>(앞사람보다 더 많은 돈 부르기) 또는 <b>패스</b>(그만하기)를 골라요.<br>
+③ 패스하면 남은 집 중 <b>가장 나쁜 집</b>을 가져가고, 불렀던 돈의 <b>절반을 돌려받아요</b>.<br>
+④ 끝까지 남은 한 사람이 <b>가장 좋은 집</b>을 가져가고, 부른 돈을 <b>전부 내요</b>.<br>
+⑤ 집 카드가 다 떨어질 때까지 반복해요.</p>
+<p>💡 예시: $4,000을 불렀다가 패스하면 $2,000을 돌려받아요. $3,000이었다면 절반 $1,500을 $1,000 단위로 내려서 $1,000만 돌려받아요.</p>
+<h4>2단계: 집 팔기</h4>
+<p>① 사람 수만큼 수표($0~$15,000)가 펼쳐져요.<br>
+② 모두 몰래 내 집 카드 1장을 골라요.<br>
+③ 동시에 공개! <b>번호가 큰 집</b>일수록 <b>비싼 수표</b>를 가져가요.<br>
+④ 집을 다 팔 때까지 반복해요.</p>
+<h4>🏆 점수</h4>
+<p>남은 돈 + 받은 수표 = 내 점수. 점수가 같으면 남은 돈이 많은 사람이 이겨요.</p>
+<button onclick="rules.close()">닫기</button></dialog>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<script>
+const FB={apiKey:"AIzaSyBaCGL9HFO1bHYl4XHpBq6lpvstYhcm5EQ",authDomain:"forsale-e1be8.firebaseapp.com",databaseURL:"https://forsale-e1be8-default-rtdb.asia-southeast1.firebasedatabase.app",projectId:"forsale-e1be8",storageBucket:"forsale-e1be8.firebasestorage.app",messagingSenderId:"844634125485",appId:"1:844634125485:web:a24abe2cf51b4b2f950224"};
+let db=null;const fbOK=!FB.apiKey.startsWith('YOUR');
+if(fbOK){try{firebase.initializeApp(FB);db=firebase.database()}catch(e){}}
+const $=id=>document.getElementById(id);
+const sh=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const fm=v=>'$'+v.toLocaleString();
+let G=null,mode='menu',me=0,room=null,isHost=false,names=[],lv=-1,dr=null,bv=1000;
+
+/* ===== 게임 로직 ===== */
+function init(nm){
+  const n=nm.length,rm=n==3?6:n==4?2:0;
+  const p=sh([...Array(30)].map((_,i)=>i+1)).slice(rm);
+  const c=sh([0,0,...[...Array(14)].flatMap((_,i)=>[i+2,i+2])]).slice(rm);
+  G={n,names:nm,money:nm.map(_=>n<=4?18000:14000),props:nm.map(_=>[]),chq:nm.map(_=>[]),pd:p,cd:c,phase:'a',start:Math.random()*n|0,msg:'',res:[],sel:{},ck:[]};
+  round();
+}
+function round(){
+  G.mk=G.pd.splice(0,G.n).sort((a,b)=>a-b);
+  G.bid=Array(G.n).fill(0);G.out=Array(G.n).fill(0);G.hi=0;G.cur=G.start;
+}
+const nx=p=>{let q=p;do q=(q+1)%G.n;while(G.out[q]);return q};
+function sr(){G.ck=G.cd.splice(0,G.n).sort((a,b)=>b-a);G.sel={}}
+function resolve(){
+  const S=i=>G.sel['p'+i];
+  const o=[...Array(G.n).keys()].sort((a,b)=>S(b)-S(a));
+  G.res=o.map((p,k)=>{G.props[p]=G.props[p].filter(x=>x!=S(p));G.chq[p].push(G.ck[k]);return G.names[p]+': '+S(p)+'번 → '+fm(G.ck[k]*1000)});
+  if(G.cd.length)sr();else G.phase='e';
+}
+function apply(p,a){
+  if(G.phase=='a'){
+    if(p!=G.cur)return;
+    if(a.t=='bid'){
+      const v=a.v;
+      if(!(v>G.hi&&v<=G.money[p]&&v%1000==0))return;
+      G.bid[p]=v;G.hi=v;G.cur=nx(p);G.msg=G.names[p]+' 입찰 '+fm(v);G.res=[];
+    }else if(a.t=='pass'){
+      const c=G.mk.shift(),rf=Math.floor(G.bid[p]/2000)*1000;
+      G.money[p]-=G.bid[p]-rf;G.props[p].push(c);G.out[p]=1;G.res=[];
+      G.msg=G.names[p]+' 패스: '+c+'번 획득'+(rf?' (환급 '+fm(rf)+')':'');
+      const left=G.out.map((o,i)=>o?-1:i).filter(i=>i>=0);
+      if(left.length==1){
+        const w=left[0],c2=G.mk.shift();
+        G.money[w]-=G.bid[w];G.props[w].push(c2);G.start=w;
+        G.msg+=' / '+G.names[w]+' 낙찰: '+c2+'번 ('+fm(G.bid[w])+')';
+        if(G.pd.length)round();else{G.phase='s';sr()}
+      }else G.cur=nx(p);
+    }
+  }else if(G.phase=='s'){
+    if(a.t=='pick'&&G.sel['p'+p]==null&&G.props[p].includes(a.c)){
+      G.sel['p'+p]=a.c;
+      if(Object.keys(G.sel).length==G.n)resolve();
+    }
+  }
+}
+const actor=()=>G.phase=='a'?G.cur:[...Array(G.n).keys()].find(i=>G.sel['p'+i]==null);
+const score=i=>G.money[i]+G.chq[i].reduce((s,x)=>s+x,0)*1000;
+const winner=g=>g.names.map((_,i)=>i).sort((a,b)=>score(b)-score(a)||g.money[b]-g.money[a])[0];
+const isWin=(g,i)=>{const w=winner(g);return score(i)==score(w)&&g.money[i]==g.money[w]};
+
+/* ===== 동기화 ===== */
+function norm(s){
+  ['pd','cd','mk','ck','res'].forEach(k=>s[k]=s[k]||[]);
+  s.props=Array.from({length:s.n},(_,i)=>(s.props&&s.props[i])||[]);
+  s.chq=Array.from({length:s.n},(_,i)=>(s.chq&&s.chq[i])||[]);
+  s.sel=s.sel||{};s.msg=s.msg||'';return s;
+}
+function sync(){if(mode!='local'&&isHost)db.ref('rooms/'+room+'/st').set(JSON.parse(JSON.stringify(G)))}
+function act(a){
+  if(mode=='local'){apply(actor(),a);R()}
+  else if(isHost){apply(me,a);sync();R()}
+  else db.ref('rooms/'+room+'/act').push({p:me,...a});
+}
+function listen(){
+  const r=db.ref('rooms/'+room);
+  r.child('pl').on('value',s=>{names=s.val()||[];if(mode=='lobby'||mode=='board')R()});
+  r.child('st').on('value',s=>{if(s.val()){G=norm(s.val());if(mode!='board')mode='play';R()}});
+  if(isHost)r.child('act').on('child_added',s=>{const a=s.val();apply(a.p,a);s.ref.remove();sync();R()});
+}
+function create(){
+  if(!db)return alert('Firebase 설정(FB)을 먼저 채워주세요.');
+  const nm=$('nm').value||'방장';
+  room=Math.random().toString(36).slice(2,6).toUpperCase();me=0;isHost=true;
+  db.ref('rooms/'+room).set({pl:[nm]}).then(()=>{mode='lobby';listen();R()});
+}
+function join(){
+  if(!db)return alert('Firebase 설정(FB)을 먼저 채워주세요.');
+  const c=$('cd').value.toUpperCase().trim(),nm=$('nm').value||'손님',ref=db.ref('rooms/'+c);
+  ref.once('value').then(s=>{
+    if(!s.exists()||s.val().st)return alert('입장할 수 없는 방입니다.');
+    ref.child('pl').transaction(l=>{if(!l||l.length>=6)return l;l.push(nm);return l},(e,ok,sn)=>{
+      if(!ok)return alert('방이 가득 찼습니다.');
+      room=c;me=sn.val().length-1;isHost=false;mode='lobby';listen();R();
+    });
+  });
+}
+function startOnline(){if(names.length<3)return;init(names);mode='play';sync();R()}
+function startLocal(){
+  const nm=Array.from({length:lc},(_,i)=>($('ln'+i).value.trim()||CN[i]+' 플레이어'));
+  init(nm);mode='local';lv=-1;R();
+}
+
+/* ===== 화면 ===== */
+const house=n=>`<div class="pc ${n>20?'t3':n>10?'t2':''}"><div class="in"></div><span class="n">${n}</span><svg viewBox="0 0 40 30"><circle cx="11" cy="15" r="7"/><path d="M18 15h18M30 15v6M35 15v4"/></svg><span class="l">부동산</span></div>`;
+const chq=v=>`<div class="cq ${v?'':'z'}"><div class="in"></div><span class="t">수 표</span><span class="s">$</span><span class="v">${fm(v*1000)}</span></div>`;
+const deck=(k,c)=>`<div class="deck ${c?'c':''}"><span>${k}</span></div>`;
+function R(){
+  const a=$('app');
+  document.body.className=mode=='menu'?'home':'';
+  a.innerHTML=mode=='menu'?home():mode=='mlocal'?mLocal():mode=='monline'?mOnline():mode=='mboard'?mBoard():mode=='board'?bd():mode=='lobby'?lobby():play();
+}
+const back='<button class="g" onclick="mode=\'menu\';R()">← 처음으로</button>';
+const home=()=>`<div class="hd"><h1>포세일</h1><p class="sub">For Sale</p></div>
+<div class="fan">${[3,12,21,30].map((n,i)=>`<div style="--r:${(i-1.5)*9}deg;--y:${Math.abs(i-1.5)*6}">${house(n)}</div>`).join('')}<div style="--r:16deg;--y:16">${chq(15)}</div></div>
+<button class="hb a" onclick="mode='mlocal';R()">한 기기로 함께 (로컬)</button>
+<button class="hb" onclick="mode='monline';R()">온라인으로 함께</button>
+<button class="hb" onclick="mode='mboard';R()">전자칠판 모드 (모둠)</button>
+<button class="hb" onclick="rules.showModal()">게임 규칙</button><p class="credit">made by m00n</p>`;
+let lc=3,lnm=[];
+const CN=['빨강','파랑','초록','노랑','보라','주황'],CC=['#d33','#2a6fd6','#2a9a4a','#e8b830','#8a4fc7','#ee7a1e'];
+function lsave(){for(let i=0;i<6;i++){const e=$('ln'+i);if(e)lnm[i]=e.value}}
+const mLocal=()=>`<h1>포세일</h1><p class="sub">For Sale</p><div class="box"><h3>한 기기로 하기 <small>(한 기기에서 번갈아)</small></h3><p>인원 <select style="font:inherit;padding:6px" onchange="lsave();lc=+this.value;R()">${[3,4,5,6].map(n=>`<option ${n==lc?'selected':''}>${n}</option>`).join('')}</select></p>${Array.from({length:lc},(_,i)=>`<div><span style="display:inline-block;width:16px;height:16px;border-radius:4px;background:${CC[i]};vertical-align:middle"></span><input id="ln${i}" placeholder="${CN[i]} 플레이어" value="${lnm[i]||''}"></div>`).join('')}<button onclick="startLocal()">게임 시작</button></div>`+back;
+const mOnline=()=>`<h1>포세일</h1><p class="sub">For Sale</p>
+<div class="box"><h3>온라인</h3><input id="nm" placeholder="내 이름"><button onclick="create()">방 만들기</button><br><input id="cd" placeholder="방 코드" maxlength="4"><button onclick="join()">참가</button>${fbOK?'':'<p class="err">Firebase 설정(FB)이 비어 있어 온라인은 작동하지 않습니다.</p>'}</div>`+back;
+const lobby=()=>`<h1>포세일</h1><div class="box"><h3>방 코드: ${room}</h3>${names.map((n,i)=>`<div>${i+1}. ${n}${i==me?' (나)':''}</div>`).join('')}<p>3~6명이 모이면 방장이 시작합니다.</p>${isHost?`<button onclick="startOnline()" ${names.length<3?'disabled':''}>게임 시작</button>`:'<p>방장을 기다리는 중...</p>'}</div>`;
+function cover(){
+  const p=actor();
+  return `<h1>포세일</h1><div class="box"><p>${G.msg}</p>${G.res.map(r=>`<div>${r}</div>`).join('')}<h3>${G.names[p]}님에게 기기를 넘기세요</h3><button onclick="lv=${p};R()">${G.names[p]}입니다</button></div>`;
+}
+function play(){
+  const g=G,v=mode=='local'?lv:me;
+  if(mode=='local'&&g.phase!='e'&&lv!=actor())return cover();
+  let h=`<div class="top"><b>포세일</b><span>${g.phase=='a'?'1단계 경매':g.phase=='s'?'2단계 매각':'게임 종료'}</span><span>${g.phase=='a'?'부동산 더미 '+g.pd.length:'수표 더미 '+g.cd.length}장</span><button class="g" onclick="rules.showModal()">규칙</button></div>`;
+  if(g.msg)h+=`<div class="msg">${g.msg}</div>`;
+  if(g.res.length)h+=`<div class="msg">${g.res.join('<br>')}</div>`;
+  if(g.phase=='e'){
+    const mx=Math.max(...g.names.map((_,i)=>score(i)));
+    return h+`<div class="end"><h3>최종 결과</h3><table><tr><th>이름</th><th>자금</th><th>수표</th><th>합계</th></tr>${g.names.map((n,i)=>`<tr class="${isWin(g,i)?'win':''}"><td>${n}</td><td>${fm(g.money[i])}</td><td>${fm(g.chq[i].reduce((s,x)=>s+x,0)*1000)}</td><td><b>${fm(score(i))}</b></td></tr>`).join('')}</table></div><button onclick="location.reload()">처음으로</button>`;
+  }
+  const my=g.phase=='a'?g.cur==v:g.sel['p'+v]==null;
+  h+=`<div class="mk">${g.phase=='a'?deck(g.pd.length):deck(g.cd.length,1)}<div class="cards">${g.phase=='a'?g.mk.map((c,i)=>`<div class="cw">${house(c)}<small>${g.mk.length==1||i==g.mk.length-1?'낙찰 시':i==0?'패스 시':''}</small></div>`).join(''):g.ck.map(c=>chq(c)).join('')}</div></div>`;
+  h+=`<div class="pls">${g.names.map((n,i)=>`<div class="pp ${g.phase=='a'&&g.cur==i?'on':''} ${g.phase=='a'&&g.out[i]?'out':''}"><b>${n}${i==v?' (나)':''}</b><small>${g.phase=='a'?(g.out[i]?'패스':'입찰 '+(g.bid[i]?fm(g.bid[i]):'없음')):(g.sel['p'+i]!=null?'선택 완료':'고민 중')}</small><small>부동산 ${g.props[i].length}장</small></div>`).join('')}</div>`;
+  h+=`<div class="me"><b>${g.names[v]}</b><div class="money">${fm(g.money[v])}</div><div class="hand">${g.props[v].slice().sort((a,b)=>a-b).map(c=>`<div ${g.phase=='s'&&my?`onclick="dr=${c};R()"`:''} class="${dr==c?'sel':''}">${house(c)}</div>`).join('')}</div>`;
+  if(g.chq[v].length)h+=`<div class="cards">${g.chq[v].map(chq).join('')}</div>`;
+  if(g.phase=='a'){
+    if(bv<=g.hi)bv=g.hi+1000;
+    const rf=Math.floor(g.bid[v]/2000)*1000;
+    h+=my?`<p>현재 최고 ${fm(g.hi)}</p><input id="bv" type="number" step="1000" min="${g.hi+1000}" value="${bv}" oninput="bv=+this.value"><button onclick="bv+=1000;R()">+1,000</button><button onclick="bidGo()">입찰</button><button class="g" onclick="passGo()">패스 (${g.mk[0]}번 획득${rf?', '+fm(rf)+' 환급':''})</button>`:`<p>${g.names[g.cur]}님 차례입니다.</p>`;
+  }else{
+    h+=my?`<p>내놓을 부동산 카드를 고르세요.</p><button onclick="pickGo()">이 카드 내놓기</button>`:'<p>다른 플레이어를 기다리는 중...</p>';
+  }
+  return h+'</div>';
+}
+const mBoard=()=>`<h1>포세일</h1><p class="sub">전자칠판 모드</p><div class="box"><h3>칠판 연결</h3><p>모둠은 각자 기기로 온라인 모드에 참가하고, 칠판은 방 코드로 연결해 공용 화면만 보여줍니다. (자금·손패는 표시되지 않아요)</p><input id="cd" placeholder="방 코드" maxlength="4"><button onclick="board()">연결</button>${fbOK?'':'<p class="err">Firebase 설정(FB)이 비어 있어 작동하지 않습니다.</p>'}</div>`+back;
+function board(){
+  if(!db)return alert('Firebase 설정(FB)을 먼저 채워주세요.');
+  const c=$('cd').value.toUpperCase().trim();
+  db.ref('rooms/'+c).once('value').then(s=>{
+    if(!s.exists())return alert('방을 찾을 수 없습니다.');
+    room=c;isHost=false;names=[];G=null;mode='board';listen();R();
+  });
+}
+function bd(){
+  const g=G;
+  if(!g)return `<h1>포세일</h1><div class="box"><h2>방 코드: ${room}</h2>${names.map((n,i)=>`<div style="font-size:22px">${i+1}. ${n}</div>`).join('')}<p>방장이 게임을 시작하면 자동으로 진행 화면이 나타납니다.</p></div>`;
+  let h=`<div class="top" style="font-size:20px"><b>포세일</b><span>${g.phase=='a'?'1단계 경매':g.phase=='s'?'2단계 매각':'게임 종료'}</span><span>${g.phase=='a'?'부동산 더미 '+g.pd.length:'수표 더미 '+g.cd.length}장</span></div>`;
+  if(g.msg)h+=`<div class="msg" style="font-size:20px">${g.msg}</div>`;
+  if(g.res.length)h+=`<div class="msg" style="font-size:20px">${g.res.join('<br>')}</div>`;
+  if(g.phase=='e'){
+    const mx=Math.max(...g.names.map((_,i)=>score(i)));
+    return h+`<div class="end" style="font-size:22px"><h2>최종 결과</h2><table><tr><th>이름</th><th>자금</th><th>수표</th><th>합계</th></tr>${g.names.map((n,i)=>`<tr class="${isWin(g,i)?'win':''}"><td>${n}</td><td>${fm(g.money[i])}</td><td>${fm(g.chq[i].reduce((s,x)=>s+x,0)*1000)}</td><td><b>${fm(score(i))}</b></td></tr>`).join('')}</table></div>`;
+  }
+  h+=`<div class="mk" style="flex-direction:column"><div class="cards" style="zoom:1.7;justify-content:center">${g.phase=='a'?deck(g.pd.length):deck(g.cd.length,1)}${g.phase=='a'?g.mk.map(house).join(''):g.ck.map(chq).join('')}</div>${g.phase=='a'?`<h2 style="text-align:center;color:#fdf6e3;margin:6px 0 0">현재 최고 입찰 ${fm(g.hi)}</h2>`:''}</div>`;
+  h+=`<div class="pls" style="font-size:20px">${g.names.map((n,i)=>`<div class="pp ${g.phase=='a'&&g.cur==i?'on':''} ${g.phase=='a'&&g.out[i]?'out':''}"><b>${n}</b><small style="font-size:16px">${g.phase=='a'?(g.out[i]?'패스':g.cur==i?'생각 중…':'입찰 '+(g.bid[i]?fm(g.bid[i]):'없음')):(g.sel['p'+i]!=null?'선택 완료':'고민 중')}</small><small style="font-size:16px">부동산 ${g.props[i].length}장</small></div>`).join('')}</div>`;
+  return h;
+}
+function bidGo(){
+  const v=G.money[mode=='local'?lv:me];
+  if(bv<=G.hi||bv%1000||bv>v)return alert('최고액보다 높은 $1,000 단위 금액이며, 가진 돈 이하여야 합니다.');
+  act({t:'bid',v:bv});
+}
+function passGo(){act({t:'pass'})}
+function pickGo(){if(dr==null)return alert('카드를 먼저 고르세요.');const c=dr;dr=null;act({t:'pick',c})}
+R();
+</script></body></html>
